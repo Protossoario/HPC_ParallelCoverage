@@ -94,6 +94,9 @@ coverage (float locs[][2], int nlocs, float *result, int *npaths, int *ncoin)
     MPI_Reduce(&np_overall, npaths, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
     MPI_Reduce(&nc, ncoin, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
 
+    // wait for sync between all processors before continuing
+    MPI_Barrier(MPI_COMM_WORLD);
+
     if (world_rank == 0) {
         // compute the coverage result based on the global sum total of hmsum
         *result = nlocs / global_hmsum;
@@ -111,7 +114,7 @@ mean_coverage1 (char *opname, char **imsets, int nimsets)
 
     for (i = 0; i < nimsets; i++) {
         for (fno = 1; fno < 7; fno++) {
-            sprintf (fn, "data/%s_%s%d.txt", opname, imsets[i], fno);
+            sprintf (fn, "/home/alien/data/%s_%s%d.txt", opname, imsets[i], fno);
             nlocs = load_locations (fn, locs, 0);
             coverage (locs, nlocs, &cov, &np, &nc);
             // printf ("  %s %s %f %d %d\n", opname, fn, cov, np, nc);
@@ -139,9 +142,9 @@ mean_coverage2 (char *opname1, char *opname2, char **imsets, int nimsets)
 
     for (i = 0; i < nimsets; i++) {
         for (fno = 1; fno < 7; fno++) {
-            sprintf (fn1, "data/%s_%s%d.txt", opname1, imsets[i], fno);
+            sprintf (fn1, "/home/alien/data/%s_%s%d.txt", opname1, imsets[i], fno);
             nlocs = load_locations (fn1, locs, 0);
-            sprintf (fn2, "data/%s_%s%d.txt", opname2, imsets[i], fno);
+            sprintf (fn2, "/home/alien/data/%s_%s%d.txt", opname2, imsets[i], fno);
             nlocs = load_locations (fn2, locs, nlocs);
             coverage (locs, nlocs, &cov, &np, &nc);
             // printf ("  %s %s %f %d %d\n", fn1, fn2, cov, np, nc);
@@ -170,11 +173,11 @@ mean_coverage3 (char *opname1, char *opname2, char *opname3,
 
     for (i = 0; i < nimsets; i++) {
         for (fno = 1; fno < 7; fno++) {
-            sprintf (fn1, "data/%s_%s%d.txt", opname1, imsets[i], fno);
+            sprintf (fn1, "/home/alien/data/%s_%s%d.txt", opname1, imsets[i], fno);
             nlocs = load_locations (fn1, locs, 0);
-            sprintf (fn2, "data/%s_%s%d.txt", opname2, imsets[i], fno);
+            sprintf (fn2, "/home/alien/data/%s_%s%d.txt", opname2, imsets[i], fno);
             nlocs = load_locations (fn2, locs, nlocs);
-            sprintf (fn3, "data/%s_%s%d.txt", opname3, imsets[i], fno);
+            sprintf (fn3, "/home/alien/data/%s_%s%d.txt", opname3, imsets[i], fno);
             nlocs = load_locations (fn3, locs, nlocs);
             coverage (locs, nlocs, &cov, &np, &nc);
             // printf ("  %s %s %s %f %d %d\n", fn1, fn2, fn3, cov, np, nc);
@@ -203,13 +206,13 @@ mean_coverage4 (char *opname1, char *opname2, char *opname3, char *opname4,
 
     for (i = 0; i < nimsets; i++) {
         for (fno = 1; fno < 7; fno++) {
-            sprintf (fn1, "data/%s_%s%d.txt", opname1, imsets[i], fno);
+            sprintf (fn1, "/home/alien/data/%s_%s%d.txt", opname1, imsets[i], fno);
             nlocs = load_locations (fn1, locs, 0);
-            sprintf (fn2, "data/%s_%s%d.txt", opname2, imsets[i], fno);
+            sprintf (fn2, "/home/alien/data/%s_%s%d.txt", opname2, imsets[i], fno);
             nlocs = load_locations (fn2, locs, nlocs);
-            sprintf (fn3, "data/%s_%s%d.txt", opname3, imsets[i], fno);
+            sprintf (fn3, "/home/alien/data/%s_%s%d.txt", opname3, imsets[i], fno);
             nlocs = load_locations (fn3, locs, nlocs);
-            sprintf (fn4, "data/%s_%s%d.txt", opname4, imsets[i], fno);
+            sprintf (fn4, "/home/alien/data/%s_%s%d.txt", opname4, imsets[i], fno);
             nlocs = load_locations (fn4, locs, nlocs);
             coverage (locs, nlocs, &cov, &np, &nc);
             // printf ("  %s %s %s %s %f %d %d\n", fn1, fn2, fn3, fn4, cov, np, nc);

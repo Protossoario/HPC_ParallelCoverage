@@ -2,13 +2,14 @@
 // c c o v e r a g e   --   calculate the coverage of feature detectors
 // Parallel computed version of coverage.c using MPI.
 // IMPORTANT: The program produces different results on the order of 10^-5
-//            decimals. The exact output produced seems to vary depending on the
-//            number of processes used to run to the program. The same number of
-//            processes will always produce the same output, but different runs
-//            with varying number of processes will output different results
-//            starting with the fifth decimal. As far as I can tell, this is due
-//            to the floating point precision and the fact that error propagation
-//            varies depending on the order of the sum operations. As a result,
+//            decimals (though it can be higher on some instances). The exact
+//            output produced seems to vary depending on the number of processes
+//            used to run to the program. The same number of processes will
+//            always produce the same output, but different runs with varying
+//            number of processes will output different results starting with the
+//            fifth decimal. As far as I can tell, this is due to the floating
+//            point precision and the fact that error propagation varies
+//            depending on the order of the sum operations. As a result,
 //            different number of processes produce a different order of sum,
 //            which causes the error propagation to produce a different result
 //            in some instances. This happens regardless of the method used to
